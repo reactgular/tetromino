@@ -1,4 +1,6 @@
 export interface Environment {
+    base: string;
+
     brandName: string;
 
     github: string;
@@ -9,8 +11,9 @@ export interface Environment {
 }
 
 export const environment: Environment = {
-    brandName: 'Tetromino',
-    github: 'https://github.com/reactgular/tetromino',
-    storageKey: 'tetromino',
-    version: '1.0.0'
+    brandName: process.env.REACT_APP_BRAND_NAME as string,
+    github: process.env.REACT_APP_GITHUB as string,
+    storageKey: process.env.REACT_APP_STORAGE_KEY as string,
+    version: process.env.REACT_APP_VERSION as string,
+    base: process.env.REACT_APP_BASE as string
 };
