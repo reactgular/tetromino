@@ -9,6 +9,7 @@ import {HighScoresDialog} from '../organisms/dialogs/HighScoresDialog';
 import {OptionsDialog} from '../organisms/dialogs/OptionsDialog';
 import {PauseDialog} from '../organisms/dialogs/PauseDialog';
 import {UiThemeProvider} from '../particles/contexts/UiThemeContext';
+import {usePageView} from '../particles/hooks/usePageView';
 import {usePersist} from '../particles/hooks/usePersist';
 import {useTitle} from '../particles/hooks/useTitle';
 import {GameDesktop} from './GameDesktop';
@@ -21,6 +22,7 @@ export const App: FC = () => {
     const isShortScreen = useMediaQuery('(max-height:850px)');
     const isNarrowScreen = useMediaQuery('(max-width:380px)');
 
+    usePageView('/');
     usePersist(environment.storageKey);
     useTitle();
 

@@ -2,6 +2,7 @@ import {Dialog, useMediaQuery} from '@material-ui/core';
 import classNames from 'classnames';
 import {FC, useMemo} from 'react';
 import {FaArrowLeft} from 'react-icons/fa';
+import {useModalView} from '../hooks/useModalView';
 import {ClassNameProps} from '../particles.types';
 import './UiDialog.css';
 
@@ -28,6 +29,8 @@ export const UiDialog: FC<UiDialogProps & ClassNameProps> = ({
         () => large && smallScreen,
         [large, smallScreen]
     );
+
+    useModalView(open, title);
 
     return (
         <Dialog

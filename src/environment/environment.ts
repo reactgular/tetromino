@@ -1,4 +1,6 @@
 export interface Environment {
+    analytics: string;
+
     base: string;
 
     brandName: string;
@@ -11,6 +13,7 @@ export interface Environment {
 }
 
 export const environment: Environment = {
+    analytics: process.env.REACT_APP_ANALYTICS as string,
     brandName: process.env.REACT_APP_BRAND_NAME as string,
     github: process.env.REACT_APP_GITHUB as string,
     storageKey: process.env.REACT_APP_STORAGE_KEY as string,
