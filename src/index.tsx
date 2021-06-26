@@ -8,7 +8,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 if (environment.analytics) {
-    ReactGA.initialize(environment.analytics);
+    ReactGA.initialize(environment.analytics, {debug: true});
 }
 
 ReactDOM.render(
