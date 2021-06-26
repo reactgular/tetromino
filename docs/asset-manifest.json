@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/tetromino/static/css/main.83e6c266.chunk.css",
-    "main.js": "/tetromino/static/js/main.d10b2219.chunk.js",
-    "main.js.map": "/tetromino/static/js/main.d10b2219.chunk.js.map",
+    "main.js": "/tetromino/static/js/main.6825a31c.chunk.js",
+    "main.js.map": "/tetromino/static/js/main.6825a31c.chunk.js.map",
     "runtime-main.js": "/tetromino/static/js/runtime-main.f542b1c1.js",
     "runtime-main.js.map": "/tetromino/static/js/runtime-main.f542b1c1.js.map",
-    "static/js/2.dbc0765c.chunk.js": "/tetromino/static/js/2.dbc0765c.chunk.js",
-    "static/js/2.dbc0765c.chunk.js.map": "/tetromino/static/js/2.dbc0765c.chunk.js.map",
+    "static/js/2.5a8c1228.chunk.js": "/tetromino/static/js/2.5a8c1228.chunk.js",
+    "static/js/2.5a8c1228.chunk.js.map": "/tetromino/static/js/2.5a8c1228.chunk.js.map",
     "static/js/3.29fa8080.chunk.js": "/tetromino/static/js/3.29fa8080.chunk.js",
     "static/js/3.29fa8080.chunk.js.map": "/tetromino/static/js/3.29fa8080.chunk.js.map",
     "index.html": "/tetromino/index.html",
     "static/css/main.83e6c266.chunk.css.map": "/tetromino/static/css/main.83e6c266.chunk.css.map",
-    "static/js/2.dbc0765c.chunk.js.LICENSE.txt": "/tetromino/static/js/2.dbc0765c.chunk.js.LICENSE.txt",
+    "static/js/2.5a8c1228.chunk.js.LICENSE.txt": "/tetromino/static/js/2.5a8c1228.chunk.js.LICENSE.txt",
     "static/media/index.css": "/tetromino/static/media/Segment7-4Gml.fd88e4c6.otf"
   },
   "entrypoints": [
     "static/js/runtime-main.f542b1c1.js",
-    "static/js/2.dbc0765c.chunk.js",
+    "static/js/2.5a8c1228.chunk.js",
     "static/css/main.83e6c266.chunk.css",
-    "static/js/main.d10b2219.chunk.js"
+    "static/js/main.6825a31c.chunk.js"
   ]
 }

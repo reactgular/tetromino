@@ -8,11 +8,6 @@ export namespace GameActions {
     const prefix = (name: string) => `${GAME_NAME}/${name}`;
 
     /**
-     * @deprecated should increment the level and start a new level.
-     */
-    export const level = createAction<number>(prefix('level'));
-
-    /**
      * Toggles fast mode.
      */
     export const softDrop = createAction<boolean>(prefix('soft_drop'));
