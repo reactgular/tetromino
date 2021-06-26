@@ -1,0 +1,15 @@
+.ui-dialog {
+    @apply flex flex-col;
+}
+
+.ui-dialog-paper {
+    @apply dark:bg-gray-800 dark:text-gray-200 text-gray-800 m-0 p-4 w-full;
+}
+
+.ui-dialog-paper:not(.fullScreen) {
+    @apply border rounded rounded-2xl;
+}
+
+.ui-dialog-title {
+    @apply flex justify-center relative font-mono text-2xl text-center mb-5;
+}

@@ -1,0 +1,101 @@
+{
+    "name": "tetromino",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "start": "craco start",
+        "build": "craco build",
+        "test": "craco test",
+        "coverage": "craco test --coverage --watchAll=false",
+        "eject": "react-scripts eject",
+        "lint": "eslint --ext .ts,.tsx src",
+        "eslint": "eslint",
+        "pretty:staged": "pretty-quick --staged --pattern \"(src|functions/src)/**/*.*(js|jsx|ts|tsx|html|scss|css|json)\"",
+        "pretty:check": "pretty-quick --check",
+        "config:hooks": "git config --local core.hooksPath .githooks",
+        "git:pre-commit": "yarn pretty:staged && yarn lint",
+        "hooks": "yarn config:hooks",
+        "storybook": "start-storybook -p 6006 -s public",
+        "build-storybook": "build-storybook -s public"
+    },
+    "dependencies": {
+        "@craco/craco": "^6.1.2",
+        "@material-ui/core": "^4.11.4",
+        "@reduxjs/toolkit": "^1.5.1",
+        "classnames": "^2.3.1",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-icons": "^4.2.0",
+        "react-scripts": "4.0.3",
+        "web-vitals": "^1.0.1"
+    },
+    "devDependencies": {
+        "@storybook/addon-actions": "^6.2.9",
+        "@storybook/addon-essentials": "^6.2.9",
+        "@storybook/addon-links": "^6.2.9",
+        "@storybook/node-logger": "^6.2.9",
+        "@storybook/preset-create-react-app": "^3.1.7",
+        "@storybook/react": "^6.2.9",
+        "@testing-library/jest-dom": "^5.11.4",
+        "@testing-library/react": "^11.1.0",
+        "@testing-library/user-event": "^12.1.10",
+        "@types/jest": "^26.0.15",
+        "@types/node": "^12.0.0",
+        "@types/react": "^17.0.0",
+        "@types/react-dom": "^17.0.0",
+        "@types/react-test-renderer": "^17.0.1",
+        "autoprefixer": "^9",
+        "babel-loader": "8.1.0",
+        "eslint": "^7.20.0",
+        "eslint-config-prettier": "^7.2.0",
+        "eslint-plugin-prettier": "^3.3.1",
+        "eslint-plugin-react": "^7.22.0",
+        "eslint-plugin-react-hooks": "^4.2.0",
+        "postcss": "^7",
+        "prettier": "^2.2.1",
+        "pretty-quick": "^3.1.0",
+        "react-redux": "^7.2.4",
+        "react-test-renderer": "^17.0.2",
+        "redux": "^4.0.5",
+        "redux-devtools-extension": "^2.13.9",
+        "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+        "tailwindcss-neumorphism": "^0.1.0",
+        "typescript": "^4.1.2"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ],
+        "overrides": [
+            {
+                "files": [
+                    "**/*.stories.*"
+                ],
+                "rules": {
+                    "import/no-anonymous-default-export": "off"
+                }
+            },
+            {
+                "files": [
+                    "**/*.stories.*"
+                ],
+                "rules": {
+                    "import/no-anonymous-default-export": "off"
+                }
+            }
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
+}

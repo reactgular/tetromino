@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GameBlock should render the same as defaults if type is empty 1`] = `
+<div
+  className="game-block"
+  data-testid="game-block"
+>
+  <div
+    className="block-color relative w-full h-full rounded-sm"
+  />
+</div>
+`;

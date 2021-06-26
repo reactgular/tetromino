@@ -1,0 +1,15 @@
+{
+    "rules": {
+        "no-restricted-imports": [
+            "error",
+            {
+                "patterns": [
+                    "../**/templates/*",
+                    "@material-ui/*/*/*",
+                    "!@material-ui/core/test-utils/*",
+                    "react-icons/all"
+                ]
+            }
+        ]
+    }
+}

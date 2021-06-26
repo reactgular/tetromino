@@ -1,0 +1,50 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "plugin:prettier/recommended",
+        "prettier",
+        "prettier/react",
+        "prettier/@typescript-eslint"
+    ],
+    "plugins": [
+        "@typescript-eslint",
+        "react",
+        "react-hooks",
+        "prettier"
+    ],
+    "rules": {
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/no-namespace": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "react/prop-types": "off",
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-first-prop-new-line": [
+            1,
+            "multiline"
+        ],
+        "react/jsx-closing-bracket-location": [
+            2,
+            "tag-aligned"
+        ],
+        "no-restricted-imports": [
+            "error",
+            {
+                "patterns": [
+                    "@material-ui/*/*/*",
+                    "!@material-ui/core/test-utils/*",
+                    "react-icons/all"
+                ]
+            }
+        ]
+    },
+    "globals": {
+        "React": "writable"
+    }
+}
