@@ -4,8 +4,10 @@ import {GamePieces} from '../molecules/game/GamePieces';
 import {GameControls} from '../organisms/game/GameControls';
 import {GameEngine} from '../organisms/game/GameEngine';
 import {GameNumbers} from '../organisms/game/GameNumbers';
+import {usePageView} from '../particles/hooks/usePageView';
 
 export const GameMobile: VFC = () => {
+    usePageView('/game/mobile');
     return (
         <div className="flex flex-col p-4">
             <GameNumbers className="mx-auto gap-2" />
