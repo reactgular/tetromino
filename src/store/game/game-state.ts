@@ -1,4 +1,5 @@
 import {ActionReducerMapBuilder, createSlice} from '@reduxjs/toolkit';
+import ReactGA from 'react-ga';
 import {
     SOUND_DROP,
     SOUND_FINISHED,
@@ -41,22 +42,21 @@ import {
 } from './game-model';
 
 export namespace GameState {
+    const track = (action: string, value?: number) => {
+        ReactGA.event({category: GAME_NAME, action, value});
+    };
+
     export const slice = createSlice({
         name: GAME_NAME,
         initialState: GAME_INITIAL_STATE,
         reducers: {},
         extraReducers: (builder: ActionReducerMapBuilder<GameModel>) => {
             builder
-                .addCase<SnapshotAction<number>>(
-                    GameActions.level,
-                    (state, {payload}) => {
-                        state.level = payload;
-                    }
-                )
                 .addCase(GameActions.softDrop, (state, {payload}) => {
                     state.soft_drop = payload;
                 })
                 .addCase(GameActions.start, (state, {payload}) => {
+                    track('start');
                     const reset = gameReset(state.next_max);
                     return {
                         ...reset,
@@ -68,12 +68,15 @@ export namespace GameState {
                     state.status = GameStatus.RUNNING;
                 })
                 .addCase(GameActions.pause, (state, action) => {
+                    track('pause');
                     state.status = GameStatus.PAUSED;
                 })
                 .addCase(GameActions.resume, (state, action) => {
+                    track('resume');
                     state.status = GameStatus.STARTING;
                 })
                 .addCase(GameActions.quit, (state) => {
+                    track('quit');
                     return gameReset(state.next_max);
                 })
                 .addCase(GameActions.render, (state, action) => {

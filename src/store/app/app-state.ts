@@ -1,10 +1,15 @@
 import {createSlice} from '@reduxjs/toolkit';
+import ReactGA from 'react-ga';
 import {KEY_BINDINGS} from '../../components/particles/key_bindings.types';
 import {environment} from '../../environment/environment';
 import {AppActions} from './app-actions';
 import {APP_INITIAL_STATE, APP_NAME} from './app-model';
 
 export namespace AppState {
+    const track = (action: string, value?: number) => {
+        ReactGA.event({category: APP_NAME, action, value});
+    };
+
     export const slice = createSlice({
         name: APP_NAME,
         initialState: APP_INITIAL_STATE,
@@ -14,6 +19,7 @@ export namespace AppState {
                 .addCase(AppActions.dark, (state, {payload}) => {
                     state.dark =
                         payload === undefined ? !state.dark : Boolean(payload);
+                    track('dark', state.dark ? 1 : 0);
                 })
                 .addCase(AppActions.ghostPiece, (state, {payload}) => {
                     state.ghost_piece =
@@ -24,16 +30,19 @@ export namespace AppState {
                 .addCase(AppActions.music, (state, {payload}) => {
                     state.music =
                         payload === undefined ? !state.music : Boolean(payload);
+                    track('music', state.music ? 1 : 0);
                 })
                 .addCase(AppActions.musicVolume, (state, {payload}) => {
                     state.music_volume = payload;
                 })
                 .addCase(AppActions.musicType, (state, {payload}) => {
                     state.music_type = payload;
+                    track('music_type', state.music_type);
                 })
                 .addCase(AppActions.sound, (state, {payload}) => {
                     state.sound =
                         payload === undefined ? !state.sound : Boolean(payload);
+                    track('sound', state.sound ? 1 : 0);
                 })
                 .addCase(AppActions.soundVolume, (state, {payload}) => {
                     state.sound_volume = payload;
@@ -71,6 +80,7 @@ export namespace AppState {
                             Math.min(payload, max_levels)
                         );
                     }
+                    track('start_level', state.start_level);
                 })
                 .addCase(AppActions.recordScore, (state, {payload}) => {
                     const high_scores = Array.from(
@@ -78,11 +88,13 @@ export namespace AppState {
                     );
                     high_scores.sort((a, b) => a - b);
                     state.high_scores = high_scores.reverse().slice(0, 9);
+                    track('high_scores', payload);
                 })
                 .addCase(AppActions.resetScore, (state) => {
                     state.high_scores = [];
                 })
                 .addCase(AppActions.resetOptions, (state) => {
+                    track('reset_options');
                     const {dark, dialog, high_scores} = state;
                     return {
                         ...APP_INITIAL_STATE,

@@ -4,12 +4,14 @@ import {GamePieces} from '../molecules/game/GamePieces';
 import {GameControls} from '../organisms/game/GameControls';
 import {GameEngine} from '../organisms/game/GameEngine';
 import {GameNumbers} from '../organisms/game/GameNumbers';
+import {usePageView} from '../particles/hooks/usePageView';
 
 export interface GameDesktopProps {
     floatControls: boolean;
 }
 
 export const GameDesktop: VFC<GameDesktopProps> = ({floatControls}) => {
+    usePageView('/game/desktop');
     return (
         <>
             <div className="grid grid-cols-desktop gap-4 m-auto">

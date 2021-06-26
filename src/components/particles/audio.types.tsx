@@ -1,24 +1,21 @@
 import {ReactElement} from 'react';
 import {FaMusic, FaVolumeMute, FaVolumeUp} from 'react-icons/fa';
+import {environment} from '../../environment/environment';
 import {UiOption} from './ui/UiSelect';
 
 export const AUDIO_FILES = [
-    '/tetromino/audio/music/bonkers-for-arcades.mp3',
-    '/tetromino/audio/music/the-ice-cream-man.mp3',
-    '/tetromino/audio/music/8-bit-perplexion.mp3',
-    '/tetromino/audio/music/its-raining-pixels.mp3',
-    '/tetromino/audio/music/arcade-puzzler.mp3'
+    `${environment.base}/audio/music/bonkers-for-arcades.mp3`,
+    `${environment.base}/audio/music/the-ice-cream-man.mp3`,
+    `${environment.base}/audio/music/8-bit-perplexion.mp3`,
+    `${environment.base}/audio/music/its-raining-pixels.mp3`,
+    `${environment.base}/audio/music/arcade-puzzler.mp3`
 ];
 
-export const SOUND_FINISHED = '/tetromino/audio/sounds/power-down-13.mp3';
-
-export const SOUND_LEVEL = '/tetromino/audio/sounds/retro-chip-power.mp3';
-
-export const SOUND_SCORE = '/tetromino/audio/sounds/ui-quirky-19.mp3';
-
-export const SOUND_DROP = '/tetromino/audio/sounds/zapsplat_bambo_swoosh.mp3';
-
-export const SOUND_LEVEL_10 = '/tetromino/audio/sounds/zapsplat_level_up.mp3';
+export const SOUND_FINISHED = `${environment.base}/audio/sounds/power-down-13.mp3`;
+export const SOUND_LEVEL = `${environment.base}/audio/sounds/retro-chip-power.mp3`;
+export const SOUND_SCORE = `${environment.base}/audio/sounds/ui-quirky-19.mp3`;
+export const SOUND_DROP = `${environment.base}/audio/sounds/zapsplat_bambo_swoosh.mp3`;
+export const SOUND_LEVEL_10 = `${environment.base}/audio/sounds/zapsplat_level_up.mp3`;
 
 export const PRELOAD_AUDIO = [
     SOUND_FINISHED,
