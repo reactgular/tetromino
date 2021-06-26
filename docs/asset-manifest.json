@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/tetromino/static/css/main.83e6c266.chunk.css",
+    "main.js": "/tetromino/static/js/main.af99002f.chunk.js",
+    "main.js.map": "/tetromino/static/js/main.af99002f.chunk.js.map",
+    "runtime-main.js": "/tetromino/static/js/runtime-main.796795cd.js",
+    "runtime-main.js.map": "/tetromino/static/js/runtime-main.796795cd.js.map",
+    "static/js/2.1d952154.chunk.js": "/tetromino/static/js/2.1d952154.chunk.js",
+    "static/js/2.1d952154.chunk.js.map": "/tetromino/static/js/2.1d952154.chunk.js.map",
+    "static/js/3.179b3950.chunk.js": "/tetromino/static/js/3.179b3950.chunk.js",
+    "static/js/3.179b3950.chunk.js.map": "/tetromino/static/js/3.179b3950.chunk.js.map",
+    "index.html": "/tetromino/index.html",
+    "static/css/main.83e6c266.chunk.css.map": "/tetromino/static/css/main.83e6c266.chunk.css.map",
+    "static/js/2.1d952154.chunk.js.LICENSE.txt": "/tetromino/static/js/2.1d952154.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/tetromino/static/media/Segment7-4Gml.fd88e4c6.otf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.796795cd.js",
+    "static/js/2.1d952154.chunk.js",
+    "static/css/main.83e6c266.chunk.css",
+    "static/js/main.af99002f.chunk.js"
+  ]
+}
