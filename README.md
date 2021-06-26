@@ -1,46 +1,32 @@
-# Getting Started with Create React App
+# Tetromino
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![gameplay](media/tetromino-sample.gif)
 
-## Available Scripts
+A tetris-style game created with [React](https://reactjs.org/), [Redux](https://react-redux.js.org/) and [TailwindCSS](https://tailwindcss.com/).
 
-In the project directory, you can run:
+## What is it?
 
-### `yarn start`
+For those of you not familiar with Tetris, it's a game where you drop tetromino shapes to create solid rows to score points. Blocks
+far faster as you increase the level. If there is no more room to drop blocks, then the game is over.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Why build it?
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Wanted to challenge myself to build a Tetris game using just DOM elements.
+There are no SVGs or `<canvas>` graphics anywhere in the game.
 
-### `yarn test`
+All graphics are rendered as React functional components, and the game logic is handled by a Redux reducer.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Where is it?
 
-### `yarn build`
+Online demo: [https://reactgular.github.io/tetromino/](https://reactgular.github.io/tetromino/)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## How to get it?
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Clone and run it locally.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+git clone https://github.com/reactgular/tetromino
+cd tetromino
+yarn install
+yarn start
+```
