@@ -28,7 +28,7 @@ export const GameMobile: VFC = () => {
                     />
                 </div>
             </div>
-            <div className="flex absolute bottom-4 left-4 right-4">
+            <div className="flex absolute bottom-14 left-4 right-4">
                 <GameControls className="w-full" transparent={true} />
             </div>
         </div>
