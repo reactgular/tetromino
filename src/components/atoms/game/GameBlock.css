@@ -18,18 +18,21 @@
 
 .game-block {
     @apply w-full h-full;
+    aspect-ratio: 1 / 1;
 }
 
-.game-block::before {
-    float: left;
-    padding-top: 100%;
-    content: "";
-}
+@supports not (aspect-ratio: 1 / 1) {
+    .game-block::before {
+        float: left;
+        padding-top: 100%;
+        content: "";
+    }
 
-.game-block::after {
-    display: block;
-    content: "";
-    clear: both;
+    .game-block::after {
+        display: block;
+        content: "";
+        clear: both;
+    }
 }
 
 .game-block.game-block-border {
