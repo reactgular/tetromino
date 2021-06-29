@@ -48,6 +48,7 @@ export const UiButton: FC<UiButtonProps & ClassNameProps> = ({
     ...props
 }) => {
     const touching = useRef(false);
+    const pressing = useRef(false);
     const {transparent} = useUiTheme();
     const classes = useMemo(() => {
         return classNames(className, 'ui-button', {
@@ -70,19 +71,33 @@ export const UiButton: FC<UiButtonProps & ClassNameProps> = ({
                 className={classes}
                 onTouchStart={() => {
                     touching.current = true;
+                    pressing.current = true;
                     onPress && onPress();
                 }}
                 onTouchEnd={() => {
+                    pressing.current = false;
                     onRelease && onRelease();
                 }}
                 onMouseDown={(e) => {
                     if (preventFocus) {
                         e.preventDefault();
                     }
-                    !touching.current && onPress && onPress();
+                    if (!touching.current) {
+                        pressing.current = true;
+                        onPress && onPress();
+                    }
                 }}
                 onMouseUp={(e) => {
-                    !touching.current && onRelease && onRelease();
+                    if (!touching.current) {
+                        pressing.current = false;
+                        onRelease && onRelease();
+                    }
+                }}
+                onMouseLeave={(e) => {
+                    if (!touching.current && pressing.current) {
+                        pressing.current = false;
+                        onRelease && onRelease();
+                    }
                 }}
                 {...props}
             >
