@@ -22,9 +22,8 @@ export const GameValue: FC<GameValueProps & ClassNameProps> = ({
         >
             <div className="flex text-light mb-1">{label}</div>
             <div
-                className={classNames('flex w-full flex-col', {
-                    'border border-gray-200 dark:border-gray-600 rounded-lg':
-                        transparent,
+                className={classNames('flex w-full flex-col rounded-lg', {
+                    'border border-gray-200 dark:border-gray-600': transparent,
                     'dark:nm-inset-gray-800 nm-inset-gray-100': !transparent
                 })}
             >

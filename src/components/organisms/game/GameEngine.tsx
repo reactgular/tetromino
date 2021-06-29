@@ -53,10 +53,9 @@ export const GameEngine: FC<ClassNameProps> = ({className}) => {
         <div
             className={classNames(
                 className,
-                'flex relative overflow-hidden desktop:p-4 w-full',
+                'flex relative overflow-hidden rounded-lg desktop:p-4 w-full',
                 {
-                    'border border-gray-200 dark:border-gray-600 rounded-lg':
-                        transparent,
+                    'border border-gray-200 dark:border-gray-600': transparent,
                     'dark:nm-inset-gray-800 nm-inset-gray-100': !transparent
                 }
             )}
