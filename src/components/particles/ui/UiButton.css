@@ -13,7 +13,7 @@
     @apply dark:bg-gray-900 dark:text-gray-600;
 }
 
-.ui-button-standard.active, .ui-button-standard:active {
+.ui-button-standard.active:not(:disabled), .ui-button-standard:active:not(:disabled) {
     @apply nm-inset-gray-100;
     @apply dark:nm-inset-gray-800;
 }
@@ -23,7 +23,7 @@
     dark:bg-opacity-20 dark:border dark:bg-white dark:border-white dark:text-white;
 }
 
-.ui-button-trans.active, .ui-button-trans:active {
+.ui-button-trans.active:not(:disabled), .ui-button-trans:active:not(:disabled) {
     @apply border-transparent dark:border-transparent;
 }
 

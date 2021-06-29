@@ -17,7 +17,7 @@ export const GameGrid: FC<ClassNameProps> = ({className}) => {
         <div
             className={classNames(
                 className,
-                'game-grid ml-auto mr-auto w-full'
+                'game-grid ml-auto mr-auto w-full min-w-full min-h-full'
             )}
             style={{gridTemplateColumns: `repeat(${width}, minmax(0, 1fr))`}}
         >

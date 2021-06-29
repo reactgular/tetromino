@@ -7,12 +7,19 @@ export interface GameNumberProps {
 
     primary?: boolean;
 
+    reverse?: boolean;
+
     value: number;
 }
 
-export const GameNumber: FC<GameNumberProps> = ({label, primary, value}) => {
+export const GameNumber: FC<GameNumberProps> = ({
+    label,
+    primary,
+    reverse = false,
+    value
+}) => {
     return (
-        <GameValue label={label}>
+        <GameValue label={label} reverse={reverse}>
             <GameDigits
                 className="text-[1.25rem] h-[1.9rem] sm:text-2xl sm:h-[2.5rem]"
                 digits={7}
