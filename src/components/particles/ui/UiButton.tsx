@@ -34,6 +34,7 @@ export interface UiButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const UiButton: FC<UiButtonProps & ClassNameProps> = ({
     active,
+    disabled,
     preventFocus,
     primary,
     secondary,
@@ -69,10 +70,13 @@ export const UiButton: FC<UiButtonProps & ClassNameProps> = ({
         <Tooltip title={toolTip || ''}>
             <button
                 className={classes}
+                disabled={disabled}
                 onTouchStart={() => {
                     touching.current = true;
-                    pressing.current = true;
-                    onPress && onPress();
+                    if (!disabled) {
+                        pressing.current = true;
+                        onPress && onPress();
+                    }
                 }}
                 onTouchEnd={() => {
                     pressing.current = false;
@@ -82,7 +86,7 @@ export const UiButton: FC<UiButtonProps & ClassNameProps> = ({
                     if (preventFocus) {
                         e.preventDefault();
                     }
-                    if (!touching.current) {
+                    if (!touching.current && !disabled) {
                         pressing.current = true;
                         onPress && onPress();
                     }
