@@ -17,6 +17,7 @@ export const GameDesktop: VFC<GameDesktopProps> = ({floatControls}) => {
             <div className="grid grid-cols-desktop gap-4 m-auto">
                 <div className="flex flex-col">
                     <GamePieces
+                        reverse={true}
                         className="p-4"
                         label="Hold"
                         selectPieces={GameSelectors.hold}
@@ -24,11 +25,14 @@ export const GameDesktop: VFC<GameDesktopProps> = ({floatControls}) => {
                     <GameNumbers className="flex-col mt-auto gap-4" />
                 </div>
                 <GameEngine />
-                <GamePieces
-                    className="p-4"
-                    label="Next"
-                    selectPieces={GameSelectors.next}
-                />
+                <div className="flex flex-col">
+                    <GamePieces
+                        className="p-4"
+                        label="Next"
+                        reverse={true}
+                        selectPieces={GameSelectors.next}
+                    />
+                </div>
                 {!floatControls && (
                     <GameControls className="col-start-2 mt-5" />
                 )}

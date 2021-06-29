@@ -5,10 +5,13 @@ import {ClassNameProps} from '../../particles/particles.types';
 
 export interface GameValueProps {
     label: string;
+
+    reverse?: boolean;
 }
 
 export const GameValue: FC<GameValueProps & ClassNameProps> = ({
     label,
+    reverse = false,
     className,
     children
 }) => {
@@ -16,8 +19,8 @@ export const GameValue: FC<GameValueProps & ClassNameProps> = ({
     return (
         <div
             className={classNames(className, 'flex items-center w-full', {
-                'flex-col': !transparent,
-                'flex-col-reverse': transparent
+                'flex-col': !reverse,
+                'flex-col-reverse': reverse
             })}
         >
             <div className="flex text-light mb-1">{label}</div>

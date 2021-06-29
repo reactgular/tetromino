@@ -10,12 +10,13 @@ export const GameMobile: VFC = () => {
     usePageView('/game/mobile');
     return (
         <div className="flex flex-col p-4">
-            <GameNumbers className="mx-auto gap-2" />
+            <GameNumbers className="mx-auto gap-2" reverse={true} />
             <div className="grid grid-cols-mobile gap-2 mx-auto">
                 <div className="flex flex-col">
                     <GamePieces
                         className="p-1"
                         label="Hold"
+                        reverse={true}
                         selectPieces={GameSelectors.hold}
                     />
                 </div>
@@ -24,6 +25,7 @@ export const GameMobile: VFC = () => {
                     <GamePieces
                         className="p-1"
                         label="Next"
+                        reverse={true}
                         selectPieces={GameSelectors.next}
                     />
                 </div>

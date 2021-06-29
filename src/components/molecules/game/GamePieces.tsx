@@ -11,17 +11,20 @@ import {DesignDisplay} from '../design/DesignDisplay';
 export interface GamePiecesProps {
     label: string;
 
+    reverse?: boolean;
+
     selectPieces: (state: AppState) => NextTetrominos;
 }
 
 export const GamePieces: FC<GamePiecesProps & ClassNameProps> = ({
     label,
+    reverse = false,
     selectPieces,
     className
 }) => {
     const pieces: NextTetrominos = useSelector(selectPieces);
     return (
-        <GameValue label={label}>
+        <GameValue label={label} reverse={reverse}>
             <div
                 className={classNames(
                     className,
