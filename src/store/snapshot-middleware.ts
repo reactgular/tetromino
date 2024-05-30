@@ -6,6 +6,9 @@ import {AppState} from './app-store';
  */
 export const SnapShotMiddleware: Middleware = ({getState}) => {
     return (next) => (action) => {
+        if(typeof action !== 'object' || action === null) {
+            return next(action);
+        }
         return next({...action, snapshot: getState()});
     };
 };
