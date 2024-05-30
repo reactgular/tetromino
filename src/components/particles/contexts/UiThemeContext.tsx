@@ -1,4 +1,4 @@
-import {createContext, FC, useContext, useMemo} from 'react';
+import {createContext, FC, PropsWithChildren, useContext, useMemo} from 'react';
 
 export interface UiTheme {
     large: boolean;
@@ -13,7 +13,7 @@ const UiThemeContext = createContext<UiTheme>({
 
 export const useUiTheme = () => useContext(UiThemeContext);
 
-export const UiThemeProvider: FC<UiTheme> = ({
+export const UiThemeProvider: FC<PropsWithChildren<UiTheme>> = ({
     transparent,
     large,
     children

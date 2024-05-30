@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import {FC} from 'react';
+import {FC, PropsWithChildren} from 'react';
 import {useUiTheme} from '../../particles/contexts/UiThemeContext';
 import {ClassNameProps} from '../../particles/particles.types';
 
@@ -9,7 +9,7 @@ export interface GameValueProps {
     reverse?: boolean;
 }
 
-export const GameValue: FC<GameValueProps & ClassNameProps> = ({
+export const GameValue: FC<PropsWithChildren<GameValueProps & ClassNameProps>> = ({
     label,
     reverse = false,
     className,

@@ -1,6 +1,6 @@
 import {Dialog, useMediaQuery} from '@material-ui/core';
 import classNames from 'classnames';
-import {FC, useMemo} from 'react';
+import {FC, PropsWithChildren, useMemo} from 'react';
 import {FaArrowLeft} from 'react-icons/fa';
 import {useModalView} from '../hooks/useModalView';
 import {ClassNameProps} from '../particles.types';
@@ -16,7 +16,7 @@ export interface UiDialogProps {
     title: string;
 }
 
-export const UiDialog: FC<UiDialogProps & ClassNameProps> = ({
+export const UiDialog: FC<PropsWithChildren<UiDialogProps & ClassNameProps>> = ({
     onClose = () => null,
     open,
     title,
