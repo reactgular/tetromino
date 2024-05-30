@@ -1,3 +1,5 @@
+'use client';
+
 import {VFC} from 'react';
 import {GameSelectors} from '../../store/game/game-selectors';
 import {GamePieces} from '../molecules/game/GamePieces';

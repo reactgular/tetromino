@@ -1,3 +1,5 @@
+'use client';
+
 import {useMediaQuery} from '@material-ui/core';
 import {FC, useMemo} from 'react';
 import {useSelector} from 'react-redux';

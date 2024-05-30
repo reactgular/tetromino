@@ -1,6 +1,7 @@
+'use client';
+
 import {FC, useMemo} from 'react';
 import {useSelector} from 'react-redux';
-import {environment} from '../../environment/environment';
 import {AppActions} from '../../store/app/app-actions';
 import {AppDialogType} from '../../store/app/app-model';
 import {AppSelectors} from '../../store/app/app-selectors';
@@ -39,7 +40,7 @@ export const Welcome: FC<WelcomeProps> = ({
         <div className="flex flex-col h-full">
             <AppLogo
                 className="mt-auto mb-14"
-                name={environment.brandName.toUpperCase()}
+                name="Tetrimino"
             />
             <AppMenu className="w-44 ml-auto mr-auto" items={menu} />
             <AppDarkMode className="ml-auto mr-auto mt-5 mb-auto" />

@@ -1,3 +1,5 @@
+'use client';
+
 import {FC, PropsWithChildren, useMemo} from 'react';
 import {Provider} from 'react-redux';
 import {getAppStore} from '../../store/app-store';
