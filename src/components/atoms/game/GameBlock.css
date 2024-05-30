@@ -1,0 +1,162 @@
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    33% {
+        opacity: 0;
+    }
+
+    66% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.game-block {
+    @apply w-full h-full;
+    aspect-ratio: 1 / 1;
+}
+
+@supports not (aspect-ratio: 1 / 1) {
+    .game-block::before {
+        float: left;
+        padding-top: 100%;
+        content: "";
+    }
+
+    .game-block::after {
+        display: block;
+        content: "";
+        clear: both;
+    }
+}
+
+.game-block.game-block-border {
+    @apply border border-b-0 border-r-0 dark:border-gray-700 border-gray-200;
+}
+
+.block-color::after {
+    display: block;
+    position: absolute;
+    content: ' ';
+    top: 2px;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+    @apply rounded-sm;
+}
+
+.block-color::before {
+    display: block;
+    position: absolute;
+    content: ' ';
+    top: 1px;
+    bottom: 1px;
+    left: 1px;
+    right: 1px;
+    @apply rounded-sm;
+}
+
+.color-i.fill {
+    @apply dark:bg-tetro_i-500 bg-tetro_i-300;
+}
+
+.color-i::before {
+    @apply dark:bg-tetro_i-600 bg-tetro_i-400;
+}
+
+.color-i.fill::after {
+    background: radial-gradient(ellipse at top, theme('colors.tetro_i.300'), transparent);
+}
+
+.color-o.fill {
+    @apply dark:bg-tetro_o-500 bg-tetro_o-300;
+}
+
+.color-o::before {
+    @apply dark:bg-tetro_o-600 bg-tetro_o-400;
+}
+
+.color-o.fill::after {
+    background: radial-gradient(ellipse at top, theme('colors.tetro_o.300'), transparent);
+}
+
+.color-t.fill {
+    @apply dark:bg-tetro_t-500 bg-tetro_t-300;
+}
+
+.color-t::before {
+    @apply dark:bg-tetro_t-600 bg-tetro_t-400;
+}
+
+.color-t.fill::after {
+    background: radial-gradient(ellipse at top, theme('colors.tetro_t.300'), transparent);
+}
+
+.color-s.fill {
+    @apply dark:bg-tetro_s-500 bg-tetro_s-300;
+}
+
+.color-s::before {
+    @apply dark:bg-tetro_s-600 bg-tetro_s-400;
+}
+
+.color-s.fill::after {
+    background: radial-gradient(ellipse at top, theme('colors.tetro_s.300'), transparent);
+}
+
+.color-z.fill {
+    @apply dark:bg-tetro_z-500 bg-tetro_z-300;
+}
+
+.color-z::before {
+    @apply dark:bg-tetro_z-600 bg-tetro_z-400;
+}
+
+.color-z.fill::after {
+    background: radial-gradient(ellipse at top, theme('colors.tetro_z.300'), transparent);
+}
+
+.color-j.fill {
+    @apply dark:bg-tetro_j-500 bg-tetro_j-300;
+}
+
+.color-j::before {
+    @apply dark:bg-tetro_j-600 bg-tetro_j-400;
+}
+
+.color-j.fill::after {
+    background: radial-gradient(ellipse at top, theme('colors.tetro_j.300'), transparent);
+}
+
+.color-l.fill {
+    @apply dark:bg-tetro_l-500 bg-tetro_l-300;
+}
+
+.color-l::before {
+    @apply dark:bg-tetro_l-600 bg-tetro_l-400;
+}
+
+.color-l.fill::after {
+    background: radial-gradient(ellipse at top, theme('colors.tetro_l.300'), transparent);
+}
+
+.block-color.color-glow {
+    animation-name: fadeOut;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    box-shadow: 0 0 15px -3px theme('colors.blue.100');
+}
+
+.color-glow::before {
+    @apply dark:bg-blue-100 bg-blue-200;
+}
+
+.color-glow::after {
+    background: radial-gradient(ellipse at top, theme('colors.blue.100'), transparent);
+}
