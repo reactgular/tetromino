@@ -1,0 +1,86 @@
+name: "🔧 Deploy to GitHub"
+
+on:
+  # When you push changes: only affected projects will be build/deploy
+  push:
+    branches:
+      - main
+      - v2.0.x
+  # When you manually trigger: all projects will be build/deploy
+  workflow_dispatch:
+
+concurrency: "deploy"
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "📥 Checkout code"
+        uses: actions/checkout@v4
+
+      - name: "📦 Install dependencies"
+        uses: ./.github/actions/install
+
+  lint:
+    runs-on: ubuntu-latest
+    needs: [ install ]
+    steps:
+      - name: "📥 Checkout code"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: "💽 Restore node_modules cache"
+        uses: ./.github/actions/restore
+
+      - name: "🔨 Lint"
+        run: yarn lint
+
+  test:
+    runs-on: ubuntu-latest
+    needs: [ install ]
+    if: false
+    steps:
+      - name: "📥 Checkout code"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: "💽 Restore node_modules cache"
+        uses: ./.github/actions/restore
+
+      - name: "🔨 Test"
+        run: ${{ env.NX }} affected -t test
+
+  storybooks:
+    runs-on: ubuntu-latest
+    needs: [ install ]
+    if: false
+    steps:
+      - name: "📥 Checkout code"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: "💽 Restore node_modules cache"
+        uses: ./.github/actions/restore
+
+      - name: "🔨 Build storybooks"
+        run: yarn build-storybook
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [ lint, test, storybooks ]
+    if: false
+    steps:
+      - name: "📥 Checkout code"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: "💽 Restore node_modules cache"
+        uses: ./.github/actions/restore
+
+      - name: "🔨 Build projects"
+        run: yarn build
+

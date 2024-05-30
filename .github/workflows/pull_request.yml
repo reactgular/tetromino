@@ -1,0 +1,81 @@
+name: "🔄 Pull Request"
+
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened, converted_to_draft, ready_for_review ]
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.event.pull_request.number }}"
+  cancel-in-progress: true
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "📥 Checkout code"
+        uses: actions/checkout@v4
+
+      - name: "📦 Install dependencies"
+        uses: ./.github/actions/install
+
+  lint:
+    runs-on: ubuntu-latest
+    needs: [ install ]
+    steps:
+      - name: "📥 Checkout code"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: "💽 Restore node_modules cache"
+        uses: ./.github/actions/restore
+
+      - name: "🔨 Lint"
+        run: yarn lint
+
+  test:
+    runs-on: ubuntu-latest
+    needs: [ install ]
+    if: false
+    steps:
+      - name: "📥 Checkout code"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: "💽 Restore node_modules cache"
+        uses: ./.github/actions/restore
+
+      - name: "🔨 Test"
+        run: ${{ env.NX }} affected -t test
+
+  storybooks:
+    runs-on: ubuntu-latest
+    needs: [ install ]
+    if: false
+    steps:
+      - name: "📥 Checkout code"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: "💽 Restore node_modules cache"
+        uses: ./.github/actions/restore
+
+      - name: "🔨 Build storybooks"
+        run: yarn build-storybook
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [ install ]
+    steps:
+      - name: "📥 Checkout code"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: "💽 Restore node_modules cache"
+        uses: ./.github/actions/restore
+
+      - name: "🔨 Build projects"
+        run: yarn build
