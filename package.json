@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@material-ui/core": "^4.12.4",
     "@reduxjs/toolkit": "^2.2.5",
     "classnames": "^2.5.1",
     "next": "14.2.3",
