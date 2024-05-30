@@ -18,7 +18,7 @@ export const configureAppStore = (preloadedState = {}) => {
         preloadedState,
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) => {
-            return [...getDefaultMiddleware(), SnapShotMiddleware];
+            return getDefaultMiddleware().concat(SnapShotMiddleware);
         }
     });
 
