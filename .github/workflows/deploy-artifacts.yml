@@ -70,8 +70,8 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    needs: [ lint, test, storybooks ]
-    if: false
+    #needs: [ lint, test, storybooks ]
+    needs: [ lint ]
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
