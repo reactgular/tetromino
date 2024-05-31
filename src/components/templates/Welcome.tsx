@@ -1,5 +1,3 @@
-'use client';
-
 import {FC, useMemo} from 'react';
 import {useSelector} from 'react-redux';
 import {AppActions} from '../../store/app/app-actions';
