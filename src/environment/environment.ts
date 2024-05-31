@@ -13,10 +13,10 @@ export interface Environment {
 }
 
 export const environment: Environment = {
-    analytics: process.env.REACT_APP_ANALYTICS as string,
-    brandName: process.env.REACT_APP_BRAND_NAME as string,
-    github: process.env.REACT_APP_GITHUB as string,
-    storageKey: process.env.REACT_APP_STORAGE_KEY as string,
-    version: process.env.REACT_APP_VERSION as string,
-    base: process.env.REACT_APP_BASE as string
+    analytics: process.env.NEXT_PUBLIC_ANALYTICS as string,
+    brandName: process.env.NEXT_PUBLIC_BRAND_NAME as string,
+    github: process.env.NEXT_PUBLIC_GITHUB as string,
+    storageKey: process.env.NEXT_PUBLIC_STORAGE_KEY as string,
+    version: process.env.NEXT_PUBLIC_VERSION as string,
+    base: process.env.NEXT_PUBLIC_BASE as string
 };

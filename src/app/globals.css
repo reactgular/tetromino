@@ -6,6 +6,7 @@
 @layer base {
     @font-face {
         font-family: 'digits';
+        /** @todo: this will break on GitHub pages, but /tetrimino/ is the root */
         src: url('/fonts/Segment7-4Gml.otf') format('opentype');
     }
 
