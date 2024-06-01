@@ -27,7 +27,7 @@ jobs:
         id: version
         run: |
           VERSION=$(jq -r .version < package.json)
-          echo version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
           echo "::notice file={package.json},title={Release Version}::Release version: ${VERSION}"
     outputs:
       package_version: ${{ steps.version.outputs.version }}
