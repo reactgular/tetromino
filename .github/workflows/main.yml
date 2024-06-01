@@ -1,0 +1,13 @@
+name: "🚀 Main"
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency: "main"
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml

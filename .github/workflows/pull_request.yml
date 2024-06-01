@@ -9,75 +9,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  install:
-    runs-on: ubuntu-latest
-    steps:
-      - name: "📥 Checkout code"
-        uses: actions/checkout@v4
-
-      - name: "📦 Install dependencies"
-        uses: reactgular/cache@v1
-        with:
-          mode: "install"
-
-  lint:
-    runs-on: ubuntu-latest
-    needs: [ install ]
-    steps:
-      - name: "📥 Checkout code"
-        uses: actions/checkout@v4
-
-      - name: "💽 Restore node_modules cache"
-        uses: reactgular/cache@v1
-        with:
-          mode: "restore"
-
-      - name: "🔨 Lint"
-        run: yarn lint
-
-  test:
-    runs-on: ubuntu-latest
-    needs: [ install ]
-    if: false
-    steps:
-      - name: "📥 Checkout code"
-        uses: actions/checkout@v4
-
-      - name: "💽 Restore node_modules cache"
-        uses: reactgular/cache@v1
-        with:
-          mode: "restore"
-
-      - name: "🔨 Test"
-        run: ${{ env.NX }} affected -t test
-
-  storybooks:
-    runs-on: ubuntu-latest
-    needs: [ install ]
-    if: false
-    steps:
-      - name: "📥 Checkout code"
-        uses: actions/checkout@v4
-
-      - name: "💽 Restore node_modules cache"
-        uses: reactgular/cache@v1
-        with:
-          mode: "restore"
-
-      - name: "🔨 Build storybooks"
-        run: yarn build-storybook
-
   build:
+    uses: ./.github/workflows/build.yml
+
+  success:
     runs-on: ubuntu-latest
-    needs: [ install ]
+    needs: [ build]
     steps:
-      - name: "📥 Checkout code"
-        uses: actions/checkout@v4
-
-      - name: "💽 Restore node_modules cache"
-        uses: reactgular/cache@v1
-        with:
-          mode: "restore"
-
-      - name: "🔨 Build projects"
-        run: yarn build
+      - name: "✅ Success"
+        run: echo "::notice title={Success}::This step triggers auto merge if all dependencies are met."
+    outputs:
+      success: "true"

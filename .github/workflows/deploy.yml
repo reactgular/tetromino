@@ -1,0 +1,70 @@
+name: "🚀 Deploy"
+
+on:
+  workflow_dispatch:
+    inputs:
+      skipDeploy:
+        description: "Skip deployment?"
+        required: true
+        type: boolean
+        default: false
+  workflow_call:
+    inputs:
+      skipDeploy:
+        description: "Skip deployment?"
+        type: boolean
+        default: false
+
+concurrency: "deploy"
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    with:
+      testOnly: true
+
+  artifacts:
+    runs-on: ubuntu-latest
+    needs: [ build ]
+    steps:
+      - name: "📥 Checkout code"
+        uses: actions/checkout@v4
+
+      - name: "🔧 Setup Node"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+
+      - name: "💽 Restore node_modules cache"
+        uses: reactgular/cache@v1
+        with:
+          mode: "restore"
+
+      - name: "🔧 Setup Pages"
+        uses: actions/configure-pages@v5
+        with:
+          static_site_generator: next
+
+      - name: "🔨 Build"
+        run: yarn build
+
+      - name: "📦 Upload artifact"
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+  deploy:
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: [ artifacts ]
+    if: ${{ github.event.inputs.skipDeploy == false }}
+    steps:
+      - name: "🚀 Deploy to GitHub Pages"
+        id: deployment
+        uses: actions/deploy-pages@v4
