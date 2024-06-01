@@ -101,3 +101,23 @@ jobs:
 
       - name: "🔨 Build projects"
         run: yarn build
+
+  mark-release-as-bad:
+    runs-on: ubuntu-latest
+    needs: [ check-version ]
+    if: ${{ failure() && needs.check-version.result == 'failure' }}
+    steps:
+      - name: Mark release as bad
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const { owner, repo } = context.repo
+            const tag_name = context.ref.replace('refs/tags/', '')
+            const release = await github.repos.getReleaseByTag({ owner, repo, tag: tag_name })
+            await github.repos.updateRelease({
+              owner,
+              repo,
+              release_id: release.data.id,
+              name: release.data.name + ' (BAD RELEASE - version check failed)',
+              body: release.data.body + '\n\n:warning: This release was marked as bad because the version check failed.',
+            })
