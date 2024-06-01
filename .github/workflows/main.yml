@@ -1,12 +1,12 @@
-name: "🔄 Pull Request"
+name: "🚀 Main"
 
 on:
-  pull_request:
-    types: [ opened, synchronize, reopened, converted_to_draft, ready_for_review ]
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
-concurrency:
-  group: "${{ github.workflow }}-${{ github.event.pull_request.number }}"
-  cancel-in-progress: true
+concurrency: "main"
 
 jobs:
   install:

@@ -2,6 +2,19 @@ name: "🚀 Deploy"
 
 on:
   workflow_dispatch:
+    inputs:
+      skipDeploy:
+        description: "Skip deployment?"
+        required: true
+        type: boolean
+        default: false
+  workflow_call:
+    inputs:
+      skipDeploy:
+        description: "Skip deployment?"
+        required: true
+        type: boolean
+        default: false
 
 concurrency: "deploy"
 
@@ -18,8 +31,14 @@ jobs:
           mode: "install"
 
   build:
-    runs-on: ubuntu-latest
     needs: [ install ]
+    uses: ./.github/workflows/build.yml
+    with:
+      testOnly: true
+
+  artifacts:
+    runs-on: ubuntu-latest
+    needs: [ build ]
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
@@ -40,7 +59,7 @@ jobs:
         with:
           static_site_generator: next
 
-      - name: "🔨 Build projects"
+      - name: "🔨 Build"
         run: yarn build
 
       - name: "📦 Upload artifact"
@@ -56,7 +75,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: [ build ]
+    needs: [ artifacts ]
+    if: ${{ github.event.inputs.skipDeploy == false }}
     steps:
       - name: "🚀 Deploy to GitHub Pages"
         id: deployment
