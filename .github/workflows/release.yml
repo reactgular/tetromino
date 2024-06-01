@@ -1,10 +1,7 @@
 name: "🚀 Release"
 
 on:
-  release:
-    types:
-      - prereleased
-      - released
+  workflow_dispatch:
 
 concurrency: "release"
 
