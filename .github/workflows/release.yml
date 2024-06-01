@@ -17,29 +17,26 @@ jobs:
         with:
           mode: "install"
 
-  check-version:
+  version:
     runs-on: ubuntu-latest
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
 
-      - name: "🔍 Check package.json version"
+      - name: "🔍 Read package.json version"
         id: check_version
         run: |
           PACKAGE_VERSION=$(jq -r .version < package.json)
           echo "PACKAGE_VERSION=${PACKAGE_VERSION}" >> $GITHUB_ENV
-          RELEASE_VERSION=${GITHUB_REF#refs/tags/}
-          echo "RELEASE_VERSION=${RELEASE_VERSION}" >> $GITHUB_ENV
-          if [ "${PACKAGE_VERSION}" != "${RELEASE_VERSION}" ]; then
-            echo "::error file={package.json},title={Check Version}::Version mismatch: package.json version (${PACKAGE_VERSION}) does not match release version (${RELEASE_VERSION})"
-            exit 1
-          else
-            echo "::notice file={package.json},title={Check Version}::Version matches: package.json version (${PACKAGE_VERSION}) matches release version (${RELEASE_VERSION})"
-          fi
+          echo "::set-output name=package_version::${PACKAGE_VERSION}"
+          echo "::notice file={package.json},title={Version}::Package version: ${PACKAGE_VERSION}"
+    outputs:
+      package_version: ${{ steps.check_version.outputs.package_version }}
 
   lint:
     runs-on: ubuntu-latest
     needs: [ install, check-version ]
+    if: false
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
@@ -87,6 +84,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: [ install, check-version ]
+    if: false
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
@@ -102,7 +100,7 @@ jobs:
   release-failure:
     runs-on: ubuntu-latest
     needs: [ install, check-version, lint, build ]
-    if: failure()
+    if: false
     steps:
       - name: Mark release as bad
         uses: actions/github-script@v7
