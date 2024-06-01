@@ -1,15 +1,12 @@
-name: "🔧 Deploy to GitHub"
+name: "🚀 Release"
 
 on:
-  # When you push changes: only affected projects will be build/deploy
-  push:
-    branches:
-      - main
-      - v2.0.x
-  # When you manually trigger: all projects will be build/deploy
-  workflow_dispatch:
+  release:
+    types:
+      - prereleased
+      - released
 
-concurrency: "deploy"
+concurrency: "release"
 
 jobs:
   install:
@@ -70,10 +67,27 @@ jobs:
       - name: "🔨 Build storybooks"
         run: yarn build-storybook
 
+  check-version:
+    runs-on: ubuntu-latest
+    needs: [ install ]
+    steps:
+      - name: "🔍 Check package.json version"
+        id: check_version
+        run: |
+          PACKAGE_VERSION=$(jq -r .version < package.json)
+          echo "PACKAGE_VERSION=${PACKAGE_VERSION}" >> $GITHUB_ENV
+          RELEASE_VERSION=${GITHUB_REF#refs/tags/}
+          echo "RELEASE_VERSION=${RELEASE_VERSION}" >> $GITHUB_ENV
+          if [ "${PACKAGE_VERSION}" != "${RELEASE_VERSION}" ]; then
+            echo "Version mismatch: package.json version (${PACKAGE_VERSION}) does not match release version (${RELEASE_VERSION})"
+            exit 1
+          else
+            echo "Version matches: package.json version (${PACKAGE_VERSION}) matches release version (${RELEASE_VERSION})"
+          fi
+
   build:
     runs-on: ubuntu-latest
-    #needs: [ lint, test, storybooks ]
-    needs: [ lint ]
+    needs: [ install ]
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
@@ -85,4 +99,3 @@ jobs:
 
       - name: "🔨 Build projects"
         run: yarn build
-
