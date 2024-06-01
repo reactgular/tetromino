@@ -10,6 +10,7 @@ on:
           - "major"
           - "minor"
           - "patch"
+        default: "patch"
 
 concurrency: "release"
 
@@ -48,6 +49,12 @@ jobs:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+
       - name: "💽 Restore node_modules cache"
         uses: reactgular/cache@v1
         with:
@@ -63,6 +70,12 @@ jobs:
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
 
       - name: "💽 Restore node_modules cache"
         uses: reactgular/cache@v1
@@ -80,6 +93,12 @@ jobs:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+
       - name: "💽 Restore node_modules cache"
         uses: reactgular/cache@main
         with:
@@ -91,22 +110,37 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: [ install ]
-    if: false
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
+
+      - name: "🔧 Setup Node"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
 
       - name: "💽 Restore node_modules cache"
         uses: reactgular/cache@v1
         with:
           mode: "restore"
 
+      - name: "🔧 Setup Pages"
+        uses: actions/configure-pages@v5
+        with:
+          static_site_generator: next
+
       - name: "🔨 Build projects"
         run: yarn build
 
-  publish-release:
+      - name: "📦 Upload artifact"
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+  release-version:
     runs-on: ubuntu-latest
-    needs: [ version ]
+    needs: [ version, build ]
     steps:
       - name: "🚀 Publish release"
         uses: actions/github-script@v7
@@ -127,9 +161,9 @@ jobs:
               body: release.body
             });
 
-  bump-version:
+  next-version:
     runs-on: ubuntu-latest
-    needs: [ publish-release ]
+    needs: [ release-version ]
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
@@ -143,7 +177,7 @@ jobs:
         run: |
           VERSION=$(jq -r .version < package.json)
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
-          echo "::notice file={package.json},title={Bump Version}::Bump version: ${VERSION}"
+          echo "::notice file={package.json},title={Next Version}::Next version: ${VERSION}"
 
       - name: "🔄 Create Pull Request"
         uses: peter-evans/create-pull-request@v6
@@ -155,4 +189,15 @@ jobs:
           labels: "release"
           reviewers: "codemile"
           assignees: "codemile"
-          draft: true
+          draft: false
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: [ build, release-version, next-version ]
+    steps:
+      - name: "🚀 Deploy to GitHub Pages"
+        id: deployment
+        uses: actions/deploy-pages@v4
