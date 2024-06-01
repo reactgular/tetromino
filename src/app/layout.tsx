@@ -1,7 +1,13 @@
 import type {Metadata} from 'next';
 import './globals.css';
+import localFont from 'next/font/local';
 import {PropsWithChildren} from 'react';
 import {environment} from '../environment/environment';
+
+const segment = localFont({
+    src: './Segment7-4Gml.otf',
+    variable: '--font-segment'
+});
 
 export const metadata: Metadata = {
     title: `${environment.brandName}`,
@@ -13,7 +19,7 @@ export default function RootLayout({
 }: Readonly<PropsWithChildren>) {
     return (
         <html lang="en">
-        <body>{children}</body>
+        <body className={segment.className}>{children}</body>
         </html>
     );
 }
