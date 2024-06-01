@@ -16,7 +16,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: "📦 Install dependencies"
-        uses: ./.github/actions/install
+        uses: reactgular/cache@main
+        with:
+          mode: "install"
 
   lint:
     runs-on: ubuntu-latest
@@ -24,11 +26,11 @@ jobs:
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: "💽 Restore node_modules cache"
-        uses: ./.github/actions/restore
+        uses: reactgular/cache@main
+        with:
+          mode: "restore"
 
       - name: "🔨 Lint"
         run: yarn lint
@@ -40,11 +42,11 @@ jobs:
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: "💽 Restore node_modules cache"
-        uses: ./.github/actions/restore
+        uses: reactgular/cache@main
+        with:
+          mode: "restore"
 
       - name: "🔨 Test"
         run: ${{ env.NX }} affected -t test
@@ -56,11 +58,11 @@ jobs:
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: "💽 Restore node_modules cache"
-        uses: ./.github/actions/restore
+        uses: reactgular/cache@main
+        with:
+          mode: "restore"
 
       - name: "🔨 Build storybooks"
         run: yarn build-storybook
@@ -71,11 +73,11 @@ jobs:
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: "💽 Restore node_modules cache"
-        uses: ./.github/actions/restore
+        uses: reactgular/cache@main
+        with:
+          mode: "restore"
 
       - name: "🔨 Build projects"
         run: yarn build
