@@ -10,7 +10,6 @@ const ref: Record<string, unknown> = {
 };
 
 export const logger = (prefix: string, name: string = 'log') => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const func = ref[name] || (console as any)[name];
     return func.bind(console, `${prefix}:`);
 };

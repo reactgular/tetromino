@@ -1,6 +1,6 @@
 import {Tooltip} from '@material-ui/core';
 import classNames from 'classnames';
-import {ButtonHTMLAttributes, FC, useMemo, useRef} from 'react';
+import {ButtonHTMLAttributes, FC, PropsWithChildren, useMemo, useRef} from 'react';
 import {useUiTheme} from '../contexts/UiThemeContext';
 import {ClassNameProps} from '../particles.types';
 import './UiButton.css';
@@ -32,7 +32,7 @@ export interface UiButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     toolTip?: string;
 }
 
-export const UiButton: FC<UiButtonProps & ClassNameProps> = ({
+export const UiButton: FC<PropsWithChildren<UiButtonProps & ClassNameProps>> = ({
     active,
     disabled,
     preventFocus,

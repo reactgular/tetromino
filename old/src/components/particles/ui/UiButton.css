@@ -1,0 +1,56 @@
+.ui-button {
+    @apply font-mono border border-transparent;
+    @apply focus:outline-none;
+}
+
+.ui-button-standard:not(:disabled) {
+    @apply nm-flat-white active:nm-inset-gray-100;
+    @apply dark:nm-flat-gray-800 dark:active:nm-inset-gray-800;
+}
+
+.ui-button-standard:disabled {
+    @apply bg-gray-100 text-gray-400;
+    @apply dark:bg-gray-900 dark:text-gray-600;
+}
+
+.ui-button-standard.active:not(:disabled), .ui-button-standard:active:not(:disabled) {
+    @apply nm-inset-gray-100;
+    @apply dark:nm-inset-gray-800;
+}
+
+.ui-button-trans:not(:disabled) {
+    @apply border border-gray-500 bg-gray-400 bg-opacity-20 text-gray-800
+    dark:bg-opacity-20 dark:border dark:bg-white dark:border-white dark:text-white;
+}
+
+.ui-button-trans.active:not(:disabled), .ui-button-trans:active:not(:disabled) {
+    @apply border-transparent dark:border-transparent;
+}
+
+.ui-button-trans:disabled {
+    @apply text-gray-200 border-gray-200 bg-gray-200 bg-opacity-40 dark:text-gray-800 dark:bg-gray-700 dark:bg-opacity-40 dark:border-gray-800;
+}
+
+.ui-button.ui-shape-round {
+    @apply rounded-full;
+}
+
+.ui-button.ui-shape-normal {
+    @apply rounded-lg;
+}
+
+.ui-button.ui-shape-left {
+    border-radius: 50% 10% 10% 50%;
+}
+
+.ui-button.ui-shape-right {
+    border-radius: 10% 50% 50% 10%;
+}
+
+.ui-button.ui-shape-up {
+    border-radius: 50% 50% 10% 10%;
+}
+
+.ui-button.ui-shape-down {
+    border-radius: 10% 10% 50% 50%;
+}

@@ -1,5 +1,5 @@
 import {PayloadAction} from '@reduxjs/toolkit';
-import {FC} from 'react';
+import {FC, PropsWithChildren} from 'react';
 import {useSelector} from 'react-redux';
 import {useAppDispatch} from '../../../store/app-store';
 import {AppActions} from '../../../store/app/app-actions';
@@ -18,7 +18,7 @@ export interface AppDialogProps {
     title: string;
 }
 
-export const AppDialog: FC<AppDialogProps & AppDialogControl & ClassNameProps> =
+export const AppDialog: FC<PropsWithChildren<AppDialogProps & AppDialogControl & ClassNameProps>> =
     ({
         closeAction = AppActions.close(),
         selectOpen,

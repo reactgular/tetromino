@@ -1,8 +1,8 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {useDispatch} from 'react-redux';
 import {environment} from '../environment/environment';
+import {getRootReducer} from './root-reducer';
 import {SnapShotMiddleware} from './snapshot-middleware';
-import {acceptHotReload, getRootReducer} from './root-reducer';
 
 /**
  * Configures the Redux store with a default state.
@@ -18,11 +18,12 @@ export const configureAppStore = (preloadedState = {}) => {
         preloadedState,
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) => {
-            return [...getDefaultMiddleware(), SnapShotMiddleware];
+            return getDefaultMiddleware().concat(SnapShotMiddleware);
         }
     });
 
-    acceptHotReload(store, rootReducer);
+    // @todo This is an old hack to get hot reload working with Redux Toolkit.
+    // acceptHotReload(store, rootReducer);
 
     return store;
 };
