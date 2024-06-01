@@ -1,0 +1,63 @@
+name: "🚀 Deploy"
+
+on:
+  workflow_dispatch:
+
+concurrency: "deploy"
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "📥 Checkout code"
+        uses: actions/checkout@v4
+
+      - name: "📦 Install dependencies"
+        uses: reactgular/cache@v1
+        with:
+          mode: "install"
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [ install ]
+    steps:
+      - name: "📥 Checkout code"
+        uses: actions/checkout@v4
+
+      - name: "🔧 Setup Node"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+
+      - name: "💽 Restore node_modules cache"
+        uses: reactgular/cache@v1
+        with:
+          mode: "restore"
+
+      - name: "🔧 Setup Pages"
+        uses: actions/configure-pages@v5
+        with:
+          static_site_generator: next
+
+      - name: "🔨 Build projects"
+        run: yarn build
+
+      - name: "📦 Upload artifact"
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+  deploy:
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: [ build ]
+    steps:
+      - name: "🚀 Deploy to GitHub Pages"
+        id: deployment
+        uses: actions/deploy-pages@v4
