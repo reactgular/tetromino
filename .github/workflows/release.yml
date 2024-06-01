@@ -96,22 +96,25 @@ jobs:
       - name: "🔨 Build projects"
         run: yarn build
 
-  release-failure:
+  public-release:
     runs-on: ubuntu-latest
-    needs: [ install, lint, build ]
-    if: false
+    needs: [ version ]
     steps:
-      - name: Mark release as bad
+      - name: "🚀 Publish release"
         uses: actions/github-script@v7
         with:
           script: |
             const { owner, repo } = context.repo;
-            const tag_name = context.ref.replace('refs/tags/', '');
-            const release = await github.rest.repos.getReleaseByTag({ owner, repo, tag: tag_name });
-            await github.repos.updateRelease({
+            const tag_name = 'v${{needs.version.outputs.version}}';
+            const body = await github.rest.repos.generateReleaseNotes({
               owner,
               repo,
-              release_id: release.data.id,
-              body: release.data.body + '\n\n:warning: The release build has failed.',
-              draft: true
+              tag_name
+            });
+            await github.rest.repos.createRelease({
+              owner,
+              repo,
+              tag_name,
+              name: tag_name,
+              body
             });
