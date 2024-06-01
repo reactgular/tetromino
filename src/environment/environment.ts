@@ -11,6 +11,9 @@ export interface Environment {
 
     storageKey: string;
 
+    /**
+     * @deprecated
+     */
     version: string;
 }
 

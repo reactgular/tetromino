@@ -18,14 +18,18 @@ import {GameDesktop} from './GameDesktop';
 import {GameMobile} from './GameMobile';
 import {Welcome} from './Welcome';
 
-export const App: FC = () => {
+export interface AppProps {
+    version: string;
+}
+
+export const App: FC<AppProps> = ({version}) => {
     const welcoming = useSelector(GameSelectors.welcoming);
     const isWideScreen = useMediaQuery('(min-width:600px)');
     const isShortScreen = useMediaQuery('(max-height:850px)');
     const isNarrowScreen = useMediaQuery('(max-width:380px)');
 
     usePageView('/');
-    usePersist(environment.storageKey);
+    usePersist(version, environment.storageKey);
     useTitle();
 
     const game = useMemo(() => {
@@ -49,7 +53,7 @@ export const App: FC = () => {
             <PauseDialog />
             <FinishDialog />
             <HighScoresDialog />
-            <OptionsDialog />
+            <OptionsDialog version={version} />
             <CreditsDialog />
         </div>
     );
