@@ -1,0 +1,13 @@
+name: "📥 NestJS cache"
+description: "📥 Cache NestJS dependencies"
+
+runs:
+  using: "composite"
+  steps:
+    - name: "💽 Restore .next/cache cache"
+      uses: actions/cache@v4
+      with:
+        path: ${{ github.workspace }}/.next/cache
+        key: ${{ runner.os }}-${{ runner.arch }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+        restore-keys: |
+          ${{ runner.os }}-${{ runner.arch }}-nextjs-${{ hashFiles('**/yarn.lock') }}-

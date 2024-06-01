@@ -31,9 +31,7 @@ jobs:
           cache: "yarn"
 
       - name: "📦 Install dependencies"
-        uses: reactgular/cache@v1
-        with:
-          mode: "install"
+        uses: ./.github/actions/install
 
   lint:
     runs-on: ubuntu-latest
@@ -48,10 +46,8 @@ jobs:
           node-version: "20"
           cache: "yarn"
 
-      - name: "💽 Restore node_modules cache"
-        uses: reactgular/cache@v1
-        with:
-          mode: "restore"
+      - name: "📦 Install dependencies"
+        uses: ./.github/actions/install
 
       - name: "🔨 Lint"
         run: yarn lint
@@ -92,10 +88,8 @@ jobs:
           node-version: "20"
           cache: "yarn"
 
-      - name: "💽 Restore node_modules cache"
-        uses: reactgular/cache@main
-        with:
-          mode: "restore"
+      - name: "📦 Install dependencies"
+        uses: ./.github/actions/install
 
       - name: "🔨 Build storybooks"
         run: yarn build-storybook
@@ -114,10 +108,11 @@ jobs:
           node-version: "20"
           cache: "yarn"
 
-      - name: "💽 Restore node_modules cache"
-        uses: reactgular/cache@v1
-        with:
-          mode: "restore"
+      - name: "📦 Install dependencies"
+        uses: ./.github/actions/install
+
+      - name: "💽 Restore .next/cache cache"
+        uses: ./.github/actions/next-cache
 
       - name: "🔨 Build"
         run: yarn build

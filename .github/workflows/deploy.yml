@@ -36,10 +36,11 @@ jobs:
           node-version: "20"
           cache: "yarn"
 
-      - name: "💽 Restore node_modules cache"
-        uses: reactgular/cache@v1
-        with:
-          mode: "restore"
+      - name: "📦 Install dependencies"
+        uses: ./.github/actions/install
+
+      - name: "💽 Restore .next/cache cache"
+        uses: ./.github/actions/next-cache
 
       - name: "🔧 Setup Pages"
         uses: actions/configure-pages@v5
