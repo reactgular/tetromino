@@ -20,9 +20,29 @@ jobs:
         with:
           mode: "install"
 
+  check-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "📥 Checkout code"
+        uses: actions/checkout@v4
+
+      - name: "🔍 Check package.json version"
+        id: check_version
+        run: |
+          PACKAGE_VERSION=$(jq -r .version < package.json)
+          echo "PACKAGE_VERSION=${PACKAGE_VERSION}" >> $GITHUB_ENV
+          RELEASE_VERSION=${GITHUB_REF#refs/tags/}
+          echo "RELEASE_VERSION=${RELEASE_VERSION}" >> $GITHUB_ENV
+          if [ "${PACKAGE_VERSION}" != "${RELEASE_VERSION}" ]; then
+            echo "Version mismatch: package.json version (${PACKAGE_VERSION}) does not match release version (${RELEASE_VERSION})"
+            exit 1
+          else
+            echo "Version matches: package.json version (${PACKAGE_VERSION}) matches release version (${RELEASE_VERSION})"
+          fi
+
   lint:
     runs-on: ubuntu-latest
-    needs: [ install ]
+    needs: [ install, check-version ]
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
@@ -37,7 +57,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    needs: [ install ]
+    needs: [ install, check-version ]
     if: false
     steps:
       - name: "📥 Checkout code"
@@ -53,7 +73,7 @@ jobs:
 
   storybooks:
     runs-on: ubuntu-latest
-    needs: [ install ]
+    needs: [ install, check-version ]
     if: false
     steps:
       - name: "📥 Checkout code"
@@ -67,27 +87,9 @@ jobs:
       - name: "🔨 Build storybooks"
         run: yarn build-storybook
 
-  check-version:
-    runs-on: ubuntu-latest
-    needs: [ install ]
-    steps:
-      - name: "🔍 Check package.json version"
-        id: check_version
-        run: |
-          PACKAGE_VERSION=$(jq -r .version < package.json)
-          echo "PACKAGE_VERSION=${PACKAGE_VERSION}" >> $GITHUB_ENV
-          RELEASE_VERSION=${GITHUB_REF#refs/tags/}
-          echo "RELEASE_VERSION=${RELEASE_VERSION}" >> $GITHUB_ENV
-          if [ "${PACKAGE_VERSION}" != "${RELEASE_VERSION}" ]; then
-            echo "Version mismatch: package.json version (${PACKAGE_VERSION}) does not match release version (${RELEASE_VERSION})"
-            exit 1
-          else
-            echo "Version matches: package.json version (${PACKAGE_VERSION}) matches release version (${RELEASE_VERSION})"
-          fi
-
   build:
     runs-on: ubuntu-latest
-    needs: [ install ]
+    needs: [ install, check-version ]
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
