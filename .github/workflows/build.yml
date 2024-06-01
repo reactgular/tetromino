@@ -66,10 +66,8 @@ jobs:
           node-version: "20"
           cache: "yarn"
 
-      - name: "💽 Restore node_modules cache"
-        uses: reactgular/cache@v1
-        with:
-          mode: "restore"
+      - name: "📦 Install dependencies"
+        uses: ./.github/actions/install
 
       - name: "🔨 Test"
         run: ${{ env.NX }} affected -t test
