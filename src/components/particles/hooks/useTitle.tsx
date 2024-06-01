@@ -13,6 +13,9 @@ const STATUS_TITLE = {
     [GameStatus.FINISHED]: 'Game Over'
 };
 
+/**
+ * @deprecated use NextJs metadata instead
+ */
 export const useTitle = () => {
     const status = useSelector(GameSelectors.status);
     const title = useMemo(

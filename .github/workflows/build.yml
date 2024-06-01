@@ -31,9 +31,7 @@ jobs:
           cache: "yarn"
 
       - name: "📦 Install dependencies"
-        uses: reactgular/cache@v1
-        with:
-          mode: "install"
+        uses: ./.github/actions/install
 
   lint:
     runs-on: ubuntu-latest
@@ -48,10 +46,8 @@ jobs:
           node-version: "20"
           cache: "yarn"
 
-      - name: "💽 Restore node_modules cache"
-        uses: reactgular/cache@v1
-        with:
-          mode: "restore"
+      - name: "📦 Install dependencies"
+        uses: ./.github/actions/install
 
       - name: "🔨 Lint"
         run: yarn lint
@@ -70,10 +66,8 @@ jobs:
           node-version: "20"
           cache: "yarn"
 
-      - name: "💽 Restore node_modules cache"
-        uses: reactgular/cache@v1
-        with:
-          mode: "restore"
+      - name: "📦 Install dependencies"
+        uses: ./.github/actions/install
 
       - name: "🔨 Test"
         run: ${{ env.NX }} affected -t test
@@ -92,10 +86,8 @@ jobs:
           node-version: "20"
           cache: "yarn"
 
-      - name: "💽 Restore node_modules cache"
-        uses: reactgular/cache@main
-        with:
-          mode: "restore"
+      - name: "📦 Install dependencies"
+        uses: ./.github/actions/install
 
       - name: "🔨 Build storybooks"
         run: yarn build-storybook
@@ -103,7 +95,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: [ install ]
-    if: ${{ github.event.inputs.testOnly == false }}
+    if: ${{ github.event.inputs.testOnly == 'false' }}
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
@@ -114,10 +106,11 @@ jobs:
           node-version: "20"
           cache: "yarn"
 
-      - name: "💽 Restore node_modules cache"
-        uses: reactgular/cache@v1
-        with:
-          mode: "restore"
+      - name: "📦 Install dependencies"
+        uses: ./.github/actions/install
+
+      - name: "💽 Restore .next/cache cache"
+        uses: ./.github/actions/next-cache
 
       - name: "🔨 Build"
         run: yarn build

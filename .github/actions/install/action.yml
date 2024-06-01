@@ -1,0 +1,19 @@
+name: "📥 Install"
+description: "📥 Install dependencies"
+
+runs:
+  using: "composite"
+  steps:
+    - name: "💽 Restore node_modules cache"
+      uses: actions/cache@v4
+      id: cache-node-modules
+      with:
+        path: "node_modules"
+        key: ${{ runner.os }}-${{ runner.arch }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-${{ runner.arch }}-node-modules-
+
+    - name: "📥 Install dependencies"
+      if: ${{ steps.cache-node-modules.outputs.cache-hit != 'true' }}
+      shell: bash
+      run: yarn install --frozen-lockfile

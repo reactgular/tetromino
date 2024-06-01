@@ -33,7 +33,7 @@ const config: Config = {
                     'monospace'
                 ],
                 logo: ['"Black Ops One"', 'cursive'],
-                digits: ['digits']
+                digits: ['var(--font-segment)']
             },
             gridTemplateColumns: {
                 desktop: '7rem 20rem 7rem',
