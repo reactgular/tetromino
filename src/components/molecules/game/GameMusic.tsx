@@ -8,15 +8,11 @@ export const GameMusic: FC = () => {
     const music = useSelector(AppSelectors.music);
     const musicVolume = useSelector(AppSelectors.musicVolume);
     const musicType = useSelector(AppSelectors.musicType);
-    return (
-        <>
-            {music && (
-                <GameAudio
-                    src={AUDIO_FILES[musicType]}
-                    volume={musicVolume / 100}
-                    loop={true}
-                />
-            )}
-        </>
-    );
+    return music ? (
+        <GameAudio
+            src={AUDIO_FILES[musicType]}
+            volume={musicVolume / 100}
+            loop={true}
+        />
+    ) : null;
 };

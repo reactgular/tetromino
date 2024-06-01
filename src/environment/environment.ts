@@ -3,6 +3,9 @@ const endsInSlash = (str: string): string => str.endsWith('/') ? str : `${str}/`
 export interface Environment {
     analytics: string;
 
+    /**
+     * @deprecated use basePath from router instead
+     */
     base: string;
 
     brandName: string;
