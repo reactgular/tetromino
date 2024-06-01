@@ -24,14 +24,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: "🔍 Read package.json version"
-        id: check_version
+        id: version
         run: |
-          PACKAGE_VERSION=$(jq -r .version < package.json)
-          echo "PACKAGE_VERSION=${PACKAGE_VERSION}" >> $GITHUB_ENV
-          echo "::set-output name=package_version::${PACKAGE_VERSION}"
-          echo "::notice file={package.json},title={Version}::Package version: ${PACKAGE_VERSION}"
+          VERSION=$(jq -r .version < package.json)
+          echo version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "::notice file={package.json},title={Release Version}::Release version: ${VERSION}"
     outputs:
-      package_version: ${{ steps.check_version.outputs.package_version }}
+      package_version: ${{ steps.version.outputs.version }}
 
   lint:
     runs-on: ubuntu-latest
