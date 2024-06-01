@@ -10,5 +10,4 @@ concurrency: "main"
 
 jobs:
   build:
-    needs: [ install ]
     uses: ./.github/workflows/build.yml

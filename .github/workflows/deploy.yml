@@ -19,7 +19,6 @@ concurrency: "deploy"
 
 jobs:
   build:
-    needs: [ install ]
     uses: ./.github/workflows/build.yml
     with:
       testOnly: true

@@ -31,7 +31,6 @@ jobs:
       package_version: ${{ steps.version.outputs.version }}
 
   deploy:
-    needs: [ build ]
     uses: ./.github/workflows/deploy.yml
 
   release-version:
