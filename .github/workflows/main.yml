@@ -9,17 +9,6 @@ on:
 concurrency: "main"
 
 jobs:
-  install:
-    runs-on: ubuntu-latest
-    steps:
-      - name: "📥 Checkout code"
-        uses: actions/checkout@v4
-
-      - name: "📦 Install dependencies"
-        uses: reactgular/cache@v1
-        with:
-          mode: "install"
-
   build:
     needs: [ install ]
     uses: ./.github/workflows/build.yml
