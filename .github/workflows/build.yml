@@ -12,7 +12,6 @@ on:
     inputs:
       testOnly:
         description: "Run tests only?"
-        required: true
         type: boolean
         default: false
 

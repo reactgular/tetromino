@@ -12,7 +12,6 @@ on:
     inputs:
       skipDeploy:
         description: "Skip deployment?"
-        required: true
         type: boolean
         default: false
 
