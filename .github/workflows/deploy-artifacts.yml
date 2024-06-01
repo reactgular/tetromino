@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: "📦 Install dependencies"
-        uses: reactgular/cache@main
+        uses: reactgular/cache@v1
         with:
           mode: "install"
 
@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: "💽 Restore node_modules cache"
-        uses: reactgular/cache@main
+        uses: reactgular/cache@v1
         with:
           mode: "restore"
 
@@ -47,7 +47,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: "💽 Restore node_modules cache"
-        uses: reactgular/cache@main
+        uses: reactgular/cache@v1
         with:
           mode: "restore"
 
@@ -79,7 +79,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: "💽 Restore node_modules cache"
-        uses: reactgular/cache@main
+        uses: reactgular/cache@v1
         with:
           mode: "restore"
 

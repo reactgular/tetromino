@@ -1,3 +1,5 @@
+const endsInSlash = (str: string): string => str.endsWith('/') ? str : `${str}/`;
+
 export interface Environment {
     analytics: string;
 
@@ -9,6 +11,9 @@ export interface Environment {
 
     storageKey: string;
 
+    /**
+     * @deprecated
+     */
     version: string;
 }
 
@@ -18,5 +23,5 @@ export const environment: Environment = {
     github: process.env.NEXT_PUBLIC_GITHUB as string,
     storageKey: process.env.NEXT_PUBLIC_STORAGE_KEY as string,
     version: process.env.NEXT_PUBLIC_VERSION as string,
-    base: process.env.NEXT_PUBLIC_BASE as string
+    base: endsInSlash(process.env.NEXT_PUBLIC_BASE as string ?? '/')
 };

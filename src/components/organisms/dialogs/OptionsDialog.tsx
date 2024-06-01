@@ -9,12 +9,15 @@ import {GameOptions} from '../game/GameOptions';
 
 export interface OptionsDialogProps {
     selectWelcoming?: () => boolean;
+
+    version: string;
 }
 
 export const OptionsDialog: FC<OptionsDialogProps & Partial<AppDialogControl>> =
     ({
         selectWelcoming = GameSelectors.welcoming,
-        selectOpen = AppSelectors.isOpen(AppDialogType.OPTIONS)
+        selectOpen = AppSelectors.isOpen(AppDialogType.OPTIONS),
+        version
     }) => {
         const welcoming = useSelector(selectWelcoming);
         return (
@@ -25,7 +28,7 @@ export const OptionsDialog: FC<OptionsDialogProps & Partial<AppDialogControl>> =
                 selectOpen={selectOpen}
             >
                 <GameOptions darkMode={!welcoming} />
-                <AppCopyright className="mt-auto mx-auto mt-5" />
+                <AppCopyright version={version} className="mx-auto mt-5" />
             </AppDialog>
         );
     };

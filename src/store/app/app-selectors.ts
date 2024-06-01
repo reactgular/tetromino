@@ -1,7 +1,6 @@
 import {createSelector} from '@reduxjs/toolkit';
-import {environment} from '../../environment/environment';
 import {selectRoot} from '../select-root';
-import {AppDialogType, AppPersist} from './app-model';
+import {AppDialogType, AppModel, AppPersist} from './app-model';
 
 export namespace AppSelectors {
     /**
@@ -97,7 +96,6 @@ export namespace AppSelectors {
             keys
         ): AppPersist => {
             return {
-                version: environment.version,
                 dark,
                 ghost_piece,
                 start_level,

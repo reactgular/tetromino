@@ -102,23 +102,6 @@ export type AppPersist = Pick<
     | 'music_type'
     | 'high_scores'
     | 'keys'
-> & {version: string};
-
-/**
- * Defaults persist values.
- */
-export const APP_PERSIST_DEFAULT: AppPersist = {
-    dark: APP_INITIAL_STATE.dark,
-    ghost_piece: APP_INITIAL_STATE.ghost_piece,
-    start_level: APP_INITIAL_STATE.start_level,
-    sound: APP_INITIAL_STATE.sound,
-    sound_volume: APP_INITIAL_STATE.sound_volume,
-    music: APP_INITIAL_STATE.music,
-    music_volume: APP_INITIAL_STATE.music_volume,
-    music_type: APP_INITIAL_STATE.music_type,
-    high_scores: APP_INITIAL_STATE.high_scores,
-    keys: APP_INITIAL_STATE.keys,
-    version: environment.version
-};
+>;
 
 export const APP_NAME = 'app';

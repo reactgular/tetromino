@@ -1,9 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit';
 import ReactGA from 'react-ga';
 import {KEY_BINDINGS} from '../../components/particles/key_bindings.types';
-import {environment} from '../../environment/environment';
 import {AppActions} from './app-actions';
-import {APP_INITIAL_STATE, APP_NAME} from './app-model';
+import {APP_INITIAL_STATE, APP_NAME, AppModel} from './app-model';
 
 export namespace AppState {
     const track = (action: string, value?: number) => {
@@ -104,13 +103,7 @@ export namespace AppState {
                     };
                 })
                 .addCase(AppActions.persist, (state, {payload}) => {
-                    const {version, ...restore} = payload;
-                    if (version === environment.version) {
-                        return {
-                            ...state,
-                            ...restore
-                        };
-                    }
+                    return {...payload} satisfies AppModel;
                 });
         }
     });
