@@ -106,7 +106,7 @@ jobs:
           script: |
             const { owner, repo } = context.repo;
             const tag_name = 'v${{needs.version.outputs.package_version}}';
-            const {data: body} = await github.rest.repos.generateReleaseNotes({
+            const {data: release} = await github.rest.repos.generateReleaseNotes({
               owner,
               repo,
               tag_name
@@ -115,6 +115,6 @@ jobs:
               owner,
               repo,
               tag_name,
-              name: tag_name,
-              body
+              name: release.name,
+              body: release.body
             });
