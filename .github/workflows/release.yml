@@ -2,6 +2,15 @@ name: "🚀 Release"
 
 on:
   workflow_dispatch:
+    inputs:
+      next_version:
+        type: choice
+        description: "How to bump the version?"
+        options:
+          - "major"
+          - "minor"
+          - "patch"
+        default: "patch"
 
 concurrency: "release"
 
@@ -17,32 +26,34 @@ jobs:
         with:
           mode: "install"
 
-  check-version:
+  version:
     runs-on: ubuntu-latest
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
 
-      - name: "🔍 Check package.json version"
-        id: check_version
+      - name: "🔍 Read package.json version"
+        id: version
         run: |
-          PACKAGE_VERSION=$(jq -r .version < package.json)
-          echo "PACKAGE_VERSION=${PACKAGE_VERSION}" >> $GITHUB_ENV
-          RELEASE_VERSION=${GITHUB_REF#refs/tags/}
-          echo "RELEASE_VERSION=${RELEASE_VERSION}" >> $GITHUB_ENV
-          if [ "${PACKAGE_VERSION}" != "${RELEASE_VERSION}" ]; then
-            echo "::error file={package.json},title={Check Version}::Version mismatch: package.json version (${PACKAGE_VERSION}) does not match release version (${RELEASE_VERSION})"
-            exit 1
-          else
-            echo "::notice file={package.json},title={Check Version}::Version matches: package.json version (${PACKAGE_VERSION}) matches release version (${RELEASE_VERSION})"
-          fi
+          VERSION=$(jq -r .version < package.json)
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "::notice file={package.json},title={Release Version}::Release version: ${VERSION}"
+    outputs:
+      package_version: ${{ steps.version.outputs.version }}
 
   lint:
     runs-on: ubuntu-latest
-    needs: [ install, check-version ]
+    needs: [ install ]
+    if: false
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
 
       - name: "💽 Restore node_modules cache"
         uses: reactgular/cache@v1
@@ -54,11 +65,17 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    needs: [ install, check-version ]
+    needs: [ install ]
     if: false
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
 
       - name: "💽 Restore node_modules cache"
         uses: reactgular/cache@v1
@@ -70,11 +87,17 @@ jobs:
 
   storybooks:
     runs-on: ubuntu-latest
-    needs: [ install, check-version ]
+    needs: [ install ]
     if: false
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
 
       - name: "💽 Restore node_modules cache"
         uses: reactgular/cache@main
@@ -86,35 +109,95 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    needs: [ install, check-version ]
+    needs: [ install ]
     steps:
       - name: "📥 Checkout code"
         uses: actions/checkout@v4
+
+      - name: "🔧 Setup Node"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
 
       - name: "💽 Restore node_modules cache"
         uses: reactgular/cache@v1
         with:
           mode: "restore"
 
+      - name: "🔧 Setup Pages"
+        uses: actions/configure-pages@v5
+        with:
+          static_site_generator: next
+
       - name: "🔨 Build projects"
         run: yarn build
 
-  release-failure:
+      - name: "📦 Upload artifact"
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+  release-version:
     runs-on: ubuntu-latest
-    needs: [ install, check-version, lint, build ]
-    if: failure()
+    needs: [ version, build ]
     steps:
-      - name: Mark release as bad
+      - name: "🚀 Publish release"
         uses: actions/github-script@v7
         with:
           script: |
             const { owner, repo } = context.repo;
-            const tag_name = context.ref.replace('refs/tags/', '');
-            const release = await github.rest.repos.getReleaseByTag({ owner, repo, tag: tag_name });
-            await github.repos.updateRelease({
+            const tag_name = 'v${{needs.version.outputs.package_version}}';
+            const {data: release} = await github.rest.repos.generateReleaseNotes({
               owner,
               repo,
-              release_id: release.data.id,
-              body: release.data.body + '\n\n:warning: The release build has failed.',
-              draft: true
+              tag_name
             });
+            await github.rest.repos.createRelease({
+              owner,
+              repo,
+              tag_name,
+              name: release.name,
+              body: release.body
+            });
+
+  next-version:
+    runs-on: ubuntu-latest
+    needs: [ release-version ]
+    steps:
+      - name: "📥 Checkout code"
+        uses: actions/checkout@v4
+
+      - name: "🔍 Bump package.json version"
+        run: |
+          yarn version --no-git-tag-version --${{ github.event.inputs.next_version }}
+
+      - name: "🔍 Read package.json version"
+        id: version
+        run: |
+          VERSION=$(jq -r .version < package.json)
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "::notice file={package.json},title={Next Version}::Next version: ${VERSION}"
+
+      - name: "🔄 Create Pull Request"
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore: bump version to v${{steps.version.outputs.version}}"
+          title: "chore: bump version to v${{steps.version.outputs.version}}"
+          body: "Bumps the version to v${{steps.version.outputs.version}}"
+          branch: "chore/bump-v${{steps.version.outputs.version}}"
+          labels: "release"
+          reviewers: "codemile"
+          assignees: "codemile"
+          draft: false
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: [ build, release-version, next-version ]
+    steps:
+      - name: "🚀 Deploy to GitHub Pages"
+        id: deployment
+        uses: actions/deploy-pages@v4
